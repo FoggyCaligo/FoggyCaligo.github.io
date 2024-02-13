@@ -1,0 +1,190 @@
+
+
+<div>
+    <textarea id="input_amount" style="width:45vw    ; height:50px; border-radius:10px; float:left;" placeholder="양(숫자)" onkeyup="unit_calc()"></textarea>
+
+    <form action="#">
+        <select name="languages" id="unit" style="width:fit-content; height:50px;" onchange="unit_calc()">
+          <option value="select"></option>
+          <option value="km">km</option>
+          <option value="m">m</option>
+          <option value="cm">cm</option>
+          <option value="mm">mm</option>
+            
+          <option value="mg">mile</option><!--1.6km-->
+          <option value="g">yard</option><!--0.9m-->
+          <option value="kg">feet</option><!--30cm-->
+          <option value="kg">inch</option><!--2.54cm-->
+        </select>
+
+      </form>
+    <hr>
+</div>
+
+
+
+
+<div style="width:90vw;">
+    <!-- <div><div id="ts" class="rsultbox">0</div> <div class="rsultbox">ts</div>   </div> -->
+    <!-- <div><div id="Ts" class="rsultbox"style="float:left;">0</div> <div>Ts</div>   </div>
+     -->
+    <div></div>
+    <!-- <div class="unit">미국단위</div><div id="usa" class="rsultbox">0</div> -->
+    
+
+    <div>국제단위</div>
+    <div class="unit">km</div><div id="km" class="rsultbox">0</div>
+    <div class="unit">m</div><div id="m" class="rsultbox">0</div>
+    <div class="unit">cm</div><div id="cm" class="rsultbox">0</div>
+    <div class="unit">mm</div><div id="mm" class="rsultbox">0</div>
+    
+    <br>
+    <div>미국단위</div>
+    <div class="unit">mile</div><div id="mile" class="rsultbox">0</div>
+    <div class="unit">yard</div><div id="yard" class="rsultbox">0</div>
+    <div class="unit">feet</div><div id="feet" class="rsultbox">0</div>
+    <div class="unit">inch</div><div id="inch" class="rsultbox">0</div>
+    <br>
+</div>
+
+
+<style>
+    .rsultbox{
+        width: 70vw;
+        height:30px;
+        border:1px solid gray;
+        border-radius:10px;
+        margin-bottom: 3px;
+        
+    }
+    .unit{
+        width:10vw;
+        height:30px;
+        border:1px solid gray;
+        border-radius:10px;
+        margin-bottom:3px;
+        float:left;
+        background-color:#FFFAD6 ;
+        text-align: center;
+    }
+
+</style>
+
+
+
+
+
+
+
+<script>
+function unit_calc(){
+    input_amount = document.getElementById("input_amount").value;
+    input_unit = document.getElementById("unit").value;
+
+
+    switch(input_unit){
+        
+        case "km"://확인완료 o 
+            document.getElementById("km").innerHTML = ""+input_amount+"km";
+            document.getElementById("m").innerHTML = ""+input_amount*1000+"m";
+            document.getElementById("cm").innerHTML = ""+input_amount*1000*100+"cm";
+            document.getElementById("mm").innerHTML = ""+input_amount*1000*100*10+"mm";
+
+            document.getElementById("mile").innerHTML = ""+input_amount*0.621371+"mile";
+            document.getElementById("yard").innerHTML = ""+input_amount*1093.61+"yard";
+            document.getElementById("feet").innerHTML = ""+input_amount*3280.84+"feet";
+            document.getElementById("inch").innerHTML = ""+input_amount*39370.1+"inch";
+        break; 
+        
+        case "m"://확인완료 o 
+            document.getElementById("km").innerHTML = ""+input_amount/1000+"km";
+            document.getElementById("m").innerHTML = ""+input_amount+"m";
+            document.getElementById("cm").innerHTML = ""+input_amount*100+"cm";
+            document.getElementById("mm").innerHTML = ""+input_amount*100*10+"mm";
+
+            document.getElementById("mile").innerHTML = ""+input_amount*0.000621371+"mile";
+            document.getElementById("yard").innerHTML = ""+input_amount*1.09361+"yard";
+            document.getElementById("feet").innerHTML = ""+input_amount*3.28084+"feet";
+            document.getElementById("inch").innerHTML = ""+input_amount*39.3701+"inch";
+        break; 
+
+        case "cm"://확인완료 o 
+            document.getElementById("km").innerHTML = ""+input_amount/1000/100+"km";
+            document.getElementById("m").innerHTML = ""+input_amount/100+"m";
+            document.getElementById("cm").innerHTML = ""+input_amount+"cm";
+            document.getElementById("mm").innerHTML = ""+input_amount*10+"mm";
+
+            document.getElementById("mile").innerHTML = ""+input_amount*0.0000062137+"mile";
+            document.getElementById("yard").innerHTML = ""+input_amount*0.0109361+"yard";
+            document.getElementById("feet").innerHTML = ""+input_amount*0.0328084+"feet";
+            document.getElementById("inch").innerHTML = ""+input_amount*0.393701+"inch";
+        break; 
+        
+        
+        case "mm"://확인완료 o 
+            document.getElementById("km").innerHTML = ""+input_amount/1000/100/10+"km";
+            document.getElementById("m").innerHTML = ""+input_amount/100+"m";
+            document.getElementById("cm").innerHTML = ""+input_amount/10+"cm";
+            document.getElementById("mm").innerHTML = ""+input_amount+"mm";
+
+            document.getElementById("mile").innerHTML = ""+input_amount*0.00000062137+"mile";
+            document.getElementById("yard").innerHTML = ""+input_amount*0.00109361+"yard";
+            document.getElementById("feet").innerHTML = ""+input_amount*0.00328084+"feet";
+            document.getElementById("inch").innerHTML = ""+input_amount*0.0393701+"inch";
+        break; 
+
+        case 'mile'://확인완료 o 
+            document.getElementById("km").innerHTML =  ""+input_amount*1.60934+"km";
+            document.getElementById("m").innerHTML = ""+input_amount*1609.34+"m";
+            document.getElementById("cm").innerHTML = ""+input_amount*160934+"cm";
+            document.getElementById("mm").innerHTML = ""+input_amount*1609344+"mm";
+
+            document.getElementById("mile").innerHTML = ""+input_amount+"mile";
+            document.getElementById("yard").innerHTML = ""+input_amount*1760+"yard";
+            document.getElementById("feet").innerHTML = ""+input_amount*5280+"feet";
+            document.getElementById("inch").innerHTML = ""+input_amount*63360+"inch";
+        break; 
+        
+        case 'yard'://확인완료 o 
+            document.getElementById("km").innerHTML =  ""+input_amount*0.0009144+"km";
+            document.getElementById("m").innerHTML = ""+input_amount*0.9144+"m";
+            document.getElementById("cm").innerHTML = ""+input_amount*91.44+"cm";
+            document.getElementById("mm").innerHTML = ""+input_amount*91.44*10+"mm";
+
+            document.getElementById("mile").innerHTML = ""+input_amount*0.000568182+"mile";
+            document.getElementById("yard").innerHTML = ""+input_amount+"yard";
+            document.getElementById("feet").innerHTML = ""+input_amount*3+"feet";
+            document.getElementById("inch").innerHTML = ""+input_amount*36+"inch";
+        break; 
+
+        case 'feet'://확인완료 o 
+            document.getElementById("km").innerHTML =  ""+input_amount*0.0003048+"km";
+            document.getElementById("m").innerHTML = ""+input_amount*0.0003048*1000+"m";
+            document.getElementById("cm").innerHTML = ""+input_amount*0.0003048*1000*100+"cm";
+            document.getElementById("mm").innerHTML = ""+input_amount*0.0003048*1000*100*10+"mm";
+
+            document.getElementById("mile").innerHTML = ""+input_amount*0.000189394+"mile";
+            document.getElementById("yard").innerHTML = ""+input_amount*0.333333+"yard";
+            document.getElementById("feet").innerHTML = ""+input_amount+"feet";
+            document.getElementById("inch").innerHTML = ""+input_amount*12+"inch";
+        break; 
+        
+        case 'inch'://확인완료 o 
+            document.getElementById("km").innerHTML =  ""+input_amount*0.0000254 +"km";
+            document.getElementById("m").innerHTML = ""+input_amount*0.0000254*1000+"m";
+            document.getElementById("cm").innerHTML = ""+input_amount*0.0000254*1000*100+"cm";
+            document.getElementById("mm").innerHTML = ""+input_amount*0.0000254*1000*100*10+"mm";
+
+            document.getElementById("mile").innerHTML = ""+input_amount*0.0000157828+"mile";
+            document.getElementById("yard").innerHTML = ""+input_amount*0.0277778+"yard";
+            document.getElementById("feet").innerHTML = ""+input_amount*0.0833333+"feet";
+            document.getElementById("inch").innerHTML = ""+input_amount+"inch";
+        break; 
+
+    }
+
+
+}
+
+
+</script>
