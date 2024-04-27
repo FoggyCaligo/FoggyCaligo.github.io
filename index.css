@@ -12,5 +12,48 @@ select {
   }
 
 option {
-    text-align: center;
+  text-align: center;
+}
+
+body{
+  background-color: #FFFAD6;
+}
+
+
+
+.main_body{
+  width:90vw;
+  height:100vh;
+  /* background-color: white; */
+  border-radius:10px;
+  text-align:center;
+  line-height:30px; 
+  font-size:large;
+
+}
+
+
+
+.title_div{
+  width:90vw; height:80px;
+}
+.title_explanation{
+  width:90vw;
+  height:30px; 
+  background-color: rgb(212, 212, 212);
+  border-radius:10px; 
+  text-align:center;
+  line-height:30px; 
+  font-size:large;
+}
+
+.title{
+  width:90vw;height:50px; background-color: white;border-radius:10px; text-align:center;line-height:50px; font-size:large;
+}
+
+
+.content{
+  width:90vw;height:70vh; 
+  background-color: white;
+  border-radius: 10px;
 }

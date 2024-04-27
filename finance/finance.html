@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebTool</title>
+
+    <!-- <script type="text/javascript" src="index.js"></script>  -->
+    <link rel="stylesheet" href="../index.css"/>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4266970957353639"
+     crossorigin="anonymous"></script>
+
+</head>
+<center><body style="background-color: #FFFAD6;">
+    
+    <div class="main_body"><!--전체 컨텐츠 공간-->
+        <div class="title_div"><!--타이틀 공간-->
+            <div class="title_explanation">계산기 종류 선택을 위해 아래 제목을 눌러주세요</div>
+            <!-- <label class="title"></label> -->
+            <form action="#"> 
+                <select id="title" style="width:90vw; height:50px;"  onchange="if(this.value) location.href=(this.value);">
+                  <optgroup label="텍스트 툴">
+                    <option value="../text/textNspeech/soeed&count/count.html">글자수 & 발표시간 계산기</option>
+                    <option value="../text/capital.html">대소문자 변환</option>
+                  </optgroup>
+                  <optgroup label="생활계산기">
+                    <option value="../living/percent.html" >퍼센트 계산기</option>
+                    <option value="../index.html" >요리 계량단위 변환기</option>
+                    <option value="../living/dist.html">거리 단위 변환기</option>
+                  </optgroup>
+                  <optgroup label="증권계산기">
+                    <option value="../finance/finance.html"selected>배당성장주 복리 계산기</option>
+                    <!-- <option value="주식 수익률 계산기">주식 수익률 계산기</option> -->
+                  </optgroup>
+                </select>
+            </form>
+
+        </div>
+        <!--------------------------------------------------------------------------------->
+        <div class="content" >
+
+            <div id = input>
+                <textarea id="inputname" style="width:85vw; height:30px; border-radius:10px; float:left;" placeholder="종목명(생략가능)" value="0" onchange=""></textarea>
+                <br><br>
+                <!-- <div style="width: 100%; height:fit-content">  <div style="float:left; width:45%;">매수가</div>  <div style="float:left; width:45%;">보유수량</div>      </div> -->
+                <textarea id="inputprice" style="width:45%; height:fit-content; border-radius:10px; float:left;" placeholder="매수가" value="0" onchange="getInput1(); drawChart();"></textarea>
+                <textarea id="inputqty" style="width:45%; height:fit-content; border-radius:10px; float:left;" placeholder="보유수량" value="0" onchange="getInput2(); drawChart();"></textarea>
+                <br><br>
+                
+                <!-- <div style="width: 100%; height:fit-content">  <div style="float:left; width:30%;">배당수익률(%)</div>  <div style="float:left; width:30%;">배당성장률(%)</div>   <div style="float:left; width:30%;">목표기간(단위 : 년)</div>   </div> -->
+                
+                <textarea id="inputdevidend" style="width:30%; height:fit-content; border-radius:10px; float:left;" placeholder="배당수익률" value="0" onchange="getInput3(); drawChart();"></textarea>
+                <textarea id="inputgrowth" style="width:30%; height:fit-content; border-radius:10px; float:left;" placeholder="배당성장률" value="0" onchange="getInput4(); drawChart();"></textarea>
+                <textarea id="inputyear" style="width:30%; height:fit-content; border-radius:10px; float:left;" placeholder="목표기간(단위 : 년)" value="0" onchange="getInput5(); drawChart();"></textarea>
+            
+                <br><br>
+                <!-- 연간 배당 횟수 -->
+                <textarea id="inputcount" style="width:90%; height:fit-content; border-radius:10px; float:left;" placeholder="연간 배당 횟수" value="0" onchange="getInput6(); drawChart();"></textarea>
+                <br><br>
+            
+            
+                <!-- 배당수익률 = 주당배당금/주가*100
+                주당 배당금 = 배당수익률*주가/100
+             -->
+            </div>
+            
+            
+            <div id="buyprice" style="width:fit-content; height:fit-content; font-size: 10px;">
+            </div>
+           
+            <div>연간 받는 배당금 성장 추이</div>
+            <div id="rsult" style="width:90vw; height:40vh;">
+              
+            
+            
+            
+            
+              <canvas id='cvs'></canvas>
+            
+            
+            </div>
+            <style>
+                #cvs { 
+                   background-color : white;
+            
+                }
+            
+            
+            </style>
+            
+            
+            
+            
+            <script>
+            
+            var data = [];
+            var grant = false;
+            var input = {}
+            
+            
+            
+            function getInput1(){input['매수가'] = parseFloat(document.getElementById("inputprice").value);}
+            function getInput2(){input['보유수량'] = parseFloat(document.getElementById("inputqty").value);}
+            function getInput3(){input['배당수익률'] = parseFloat(document.getElementById("inputdevidend").value);}
+            function getInput4(){input['배당성장률'] = parseFloat(document.getElementById("inputgrowth").value);}
+            function getInput5(){input['목표기간'] = parseFloat(document.getElementById("inputyear").value);}
+            function getInput6(){input['연간배당횟수'] = parseFloat(document.getElementById("inputcount").value);}
+            
+            
+            function drawChart(){
+              if(
+                  input['매수가'] != null &
+                  input['보유수량'] !=null&
+                  input['배당수익률'] !=null&
+                  input['배당성장률'] !=null&
+                  input['목표기간'] !=null&
+                  input['연간배당횟수'] !=null
+                  ){
+                    grant = true;
+                }else{grant=false; return;}
+            
+                input['주당배당금'] = input['배당수익률']/100*input['매수가']/input['연간배당횟수'];
+            
+                curr_value = [];
+                curr_dev = input['주당배당금'];
+                for(i=0; i<input['목표기간']; i++){
+            
+                  curr_value[i] = (curr_dev + curr_dev*input['배당성장률']/100)*input['보유수량'];
+                  curr_dev = curr_dev + curr_dev*input['배당성장률']/100;
+                }
+                data = curr_value;
+                
+                document.getElementById("rsult").innerHTML="";
+                for(i = 0; i<input['목표기간'];i++){
+                  add_bar(i+1, data[i]);
+                }
+            }
+            
+            function add_bar(i,value){
+                max = data[input['목표기간']-1]
+                v = '<object style="float:left">'+value+'</object>';
+                html = '<div>   <div style="float:left; width:30vw; height:20px; ">'+i+'년차 : '+parseInt(value)+'</div>   <div style=" width:'+parseInt(value)/max*50+'vw; height:20px; background-color: #bff0bf; border-radius: 5px;">  </div>   </div>';
+                document.getElementById("rsult").innerHTML = document.getElementById("rsult").innerHTML+html;
+            
+            }       
+            </script>
+        </div>
+
+
+        
+    </div></center>
+
+    <ins class="kakao_ad_area" style="display:none;"
+data-ad-unit = "DAN-79u4QwH5h2jStcXj"
+data-ad-width = "320"
+data-ad-height = "50"></ins>
+<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
+<ins class="kakao_ad_area" style="display:none;"
+data-ad-unit = "DAN-K2E93nhn8GczKFI6"
+data-ad-width = "320"
+data-ad-height = "50"></ins>
+<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+</html>
+</body>
+</html>

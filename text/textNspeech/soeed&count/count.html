@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebTool</title>
+
+    <!-- <script type="text/javascript" src="index.js"></script>  -->
+    <link rel="stylesheet" href="../../../index.css"/>
+    <link rel="stylesheet" href="./btn.css"/>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4266970957353639"
+     crossorigin="anonymous"></script>
+
+</head>
+<center><body style="background-color: #FFFAD6;">
+    <div class="main_body"><!--전체 컨텐츠 공간-->
+        <div class="title_div"><!--타이틀 공간-->
+            <div class="title_explanation">계산기 종류 선택을 위해 아래 제목을 눌러주세요</div>
+            <!-- <label class="title"></label> -->
+            <form action="#"> 
+                <select id="title" style="width:90vw; height:50px;"  onchange="if(this.value) location.href=(this.value);">
+                  <optgroup label="텍스트 툴">
+                    <option value="../../../text/textNspeech/soeed&count/count.html"selected>글자수 & 발표시간 계산기</option>
+                    <option value="../../../text/capital.html">대소문자 변환</option>
+                  </optgroup>
+                  <optgroup label="생활계산기">
+                    <option value="../../../living/percent.html" >퍼센트 계산기</option>
+                    <option value="../../../index.html" >요리 계량단위 변환기</option>
+                    <option value="../../../living/dist.html">거리 단위 변환기</option>
+                  </optgroup>
+                  <optgroup label="증권계산기">
+                    <option value="../../../finance/finance.html">배당성장주 복리 계산기</option>
+                    <!-- <option value="주식 수익률 계산기">주식 수익률 계산기</option> -->
+                  </optgroup>
+                </select>
+            </form>
+
+        </div>
+        <!--------------------------------------------------------------------------------->
+        <div class="content">
+
+
+
+            <div id="contentbox" style="width: 90vw; height: 90vh;">
+                <div id="speedorcount">
+                    <div class="Nselected"onclick="location.href=('./speed.html');">Speed</div>
+                    <div class="selected" onclick="location.href=('./count.html');">Count</div>
+                </div>
+
+
+                 <!--text box-->
+
+
+ <center><textarea id="inputTxt" style="width:90vw; height:25vh;" placeholder="여기에 입력" onkeyup="count(this.value)" onload="load()"> </textarea></center>
+
+
+ <!--result-->
+ <div style="width:100%;">
+    <div class="container">
+        <div class="rsult_banner">글자 수</div>
+        <div class="rsult_num" id="count" >0</div>
+    </div><br>
+
+    <div class="container">
+        <div class="rsult_banner">공백제외</div>
+        <div class="rsult_num" id="count_exvoid" >0</div>
+    </div><br>
+    
+    <div class="container">
+        <div class="rsult_banner">공백 수</div>
+        <div class="rsult_num" id="voids" >0</div>
+    </div><br>
+
+    <div class="container">
+        <div class="rsult_banner">단어 수</div>
+        <div class="rsult_num" id="words" >0</div>
+    </div><br>
+
+    <div class="container">
+        <div class="rsult_banner">발표시간</div>
+        <div class="rsult_num" id="time" >0</div>
+    </div><br>
+    
+</div>
+
+
+
+
+
+
+
+<script>
+//업데이트 함수
+function count(v){
+    // console.log("--------------------------");
+    count_text(v);
+    count_exvoids(v);
+    count_void(v);
+    // count_word(v);
+    count_word2(v);
+    count_time();
+    localStorage.setItem("input",v);
+    
+}
+
+//글자수 카운트
+function count_text(txt){
+    document.getElementById("count").innerHTML=txt.length;
+}
+//공백제외 카운트
+function count_exvoids(txt){
+    temp = txt;
+    temp = temp.replace(/ /g,"");
+    temp = temp.replace(/\n/g,""); 
+    document.getElementById("count_exvoid").innerHTML=temp.length;
+}
+//공백 카운트
+function count_void(txt){
+    temp = txt;
+    temp = temp.replace(/ /g,"");
+    temp = temp.replace(/\n/g,"");
+    document.getElementById("voids").innerHTML=txt.length-temp.length;
+}
+//단어 카운트
+function count_word(txt){
+    temp = txt;
+    temp = temp.split(' ');
+    // temp = temp.filter((elem)=>elem!=' ');
+    if(temp[temp.length-1] == ""){ temp.pop();}//맨 마지막 띄어쓰기 있으면 취급 안하게
+    temp = temp.length;
+    document.getElementById("words").innerHTML = temp;
+}
+//단어 카운트2
+function count_word2(txt){
+    temp = txt;
+    temp = temp.split(" ");
+    console.log(temp);
+    temp = temp.filter((vo)=>vo !== "");//빈 문자열 제거(띄어쓰기 여러개 있을 경우)
+    console.log(temp);
+    temp = temp.length;
+    
+    document.getElementById("words").innerHTML = temp;
+}
+//(문장카운트)
+function count_sntnce(txt){
+    temp = txt;
+    temp = temp.split('.');
+    // console.log(temp);
+    // temp = temp.filter((elem)=>elem!=' ');
+    if(temp[temp.length-1] == ""){ temp.pop();}//맨 마지막 띄어쓰기 있으면 취급 안하게
+    temp = temp.length;
+    document.getElementById("sntnces").innerHTML = temp;
+}
+
+function count_time(){
+    wpm = localStorage.getItem("wpm");
+    exvoid = document.getElementById('count_exvoid').innerHTML;
+    document.getElementById("time").innerHTML=wpm*exvoid;
+
+}
+//wpm =  word*(60/sec);
+
+</script>
+
+
+<script>
+    //이전 입력값 가져오기ew
+    function load(){    
+        past_input = localStorage.getItem("input");
+        document.getElementById("inputTxt").value=past_input;
+        count(past_input);        
+        
+    }
+    load();     
+</script>
+
+<!--style classes-->
+<style>
+.rsult_banner{
+    width:30vw; height:6vh; background-color:#EDEDED; border-radius: 10px; float:left; 
+}
+.rsult_num{
+    text-align: left; width:60vw; height:6vh; border:1px solid gray; border-radius: 10px; float:left; 
+
+}
+
+.container{
+    width:95vw; height:fit-content; margin-top:1.5vh;
+}
+</style>
+            </div>
+
+
+
+
+        </div>
+
+
+        
+    </div></center>
+    <ins class="kakao_ad_area" style="display:none;"
+data-ad-unit = "DAN-79u4QwH5h2jStcXj"
+data-ad-width = "320"
+data-ad-height = "50"></ins>
+<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
+<ins class="kakao_ad_area" style="display:none;"
+data-ad-unit = "DAN-K2E93nhn8GczKFI6"
+data-ad-width = "320"
+data-ad-height = "50"></ins>
+<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+</html>
+</body>
+</html>

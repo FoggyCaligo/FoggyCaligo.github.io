@@ -1,0 +1,15 @@
+.selected{
+    width: 45vw; height: 50px;
+    background-color: rgb(212, 212, 212);
+    border-radius: 10px;
+    text-align: center;
+    float:left;
+}
+
+.Nselected{
+    width: 45vw; height: 50px;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    float:left;
+}
